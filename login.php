@@ -21,19 +21,26 @@ $login_password = $_POST['password'];
 
 //echo "Username: " . $login_username . "Password:" . $login_password;
 
-$query = "select password from login_info where username = '" . $login_username . "'";
+$query = "SELECT password FROM login_info WHERE username = '" . $login_username . "'";
 
 $result = $conn->query($query);
 if($result->num_rows == 1) {
     $stored_password = $result->fetch_assoc()['password'];
     if ($stored_password == $login_password) {
-        echo 'Login successful!';
-    } else {
-        echo 'Login unsuccessful.';
+        $return_msg = new stdClass();
+        $return_msg->success = true;
+        echo json_encode($return_msg);
+    }
+    else {
+        $return_msg = new stdClass();
+        $return_msg->success = false;
+        echo json_encode($return_msg);
     }
 }
 else {
-    echo "Invalid username.";
+    $return_msg = new stdClass();
+    $return_msg->success = false;
+    echo json_encode($return_msg);
 }
 
 $conn->close();
