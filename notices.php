@@ -16,7 +16,7 @@ if($conn->connect_error) {
     die("Error in connecting to database.".$conn->connect_error);
 }
 
-$query = 'SELECT notice_id, notice_date, notice_subject, sender_flat_no, sender_privilege_level FROM notices';
+$query = 'SELECT notice_id, notice_date, notice_subject, sender_flat_no, sender_privilege_level FROM notices ORDER BY DESC';
 $result = $conn->query($query);
 
 $data = new stdClass();
