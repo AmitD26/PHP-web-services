@@ -16,8 +16,7 @@ if($conn->connect_error) {
     die("Error in connecting to database.".$conn->connect_error);
 }
 
-//$notice_id = $_POST['notice_id'];
-$notice_id = 2;
+$notice_id = $_POST['notice_id'];
 
 $query = 'SELECT main_body FROM notices WHERE notice_id = ' . $notice_id;
 $result = $conn->query($query);
