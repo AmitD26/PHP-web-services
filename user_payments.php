@@ -16,16 +16,16 @@ if($conn->connect_error) {
     die("Error in connecting to database.".$conn->connect_error);
 }
 
-//$username = $_POST['username'];
-$username = 'flatno02';
+$username = $_POST['username'];
+//$username = 'flatno02';
 $flat_no = substr($username,6);
 $query = 'SELECT payment_id, amount_paid, date_of_payment, payment_type, payment_method, confirmed_flag, payment_confirmation_date FROM payment_records WHERE flat_no = ' . $flat_no;
 $result = $conn->query($query);
 
-$data = new stdClass();
+$index = 0;
 while ($row = $result->fetch_assoc()) {
-    $payment_id = $row['payment_id'];
-    unset($row['payment_id']);
-    $data->$payment_id = $row;
+    $data[$index] = $row;
+    $index++;
 }
+//echo print_r($data);
 echo json_encode($data);
