@@ -17,7 +17,6 @@ if($conn->connect_error) {
 }
 
 $username = $_POST['username'];
-//$username = 'flatno02';
 $flat_no = substr($username,6);
 $query = 'SELECT payment_id, amount_paid, date_of_payment, payment_type, payment_method, confirmed_flag, payment_confirmation_date FROM payment_records WHERE flat_no = ' . $flat_no;
 $result = $conn->query($query);
