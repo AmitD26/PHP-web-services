@@ -21,9 +21,16 @@ $username = $_POST['username'];
 //$username = 'flatno02';
 $flat_no = substr($username,6);
 if ($username == 'all') {
-    $query = 'SELECT payment_id, amount_paid, date_of_payment, payment_type, payment_method, confirmed_flag, payment_confirmation_date, receipt_given, receipt_given_date, receipt_received, receipt_received_date FROM payment_records';
+    $query = 'SELECT payment_id, amount_paid, date_of_payment, payment_type, payment_method, confirmed_flag, payment_confirmation_date, receipt_given, receipt_given_date, receipt_received, receipt_received_date, receipt_requested FROM payment_records';
+} else if ($username == 'to_be_confirmed') {
+    $query = 'SELECT payment_id, amount_paid, date_of_payment, payment_type, payment_method, confirmed_flag, payment_confirmation_date, receipt_given, receipt_given_date, receipt_received, receipt_received_date, receipt_requested FROM payment_records WHERE confirmed_flag = 0';
+} else if ($username == 'receipts_to_be_sent') {
+    $query = 'SELECT payment_id, amount_paid, date_of_payment, payment_type, payment_method, confirmed_flag, payment_confirmation_date, receipt_given, receipt_given_date, receipt_received, receipt_received_date, receipt_requested FROM payment_records WHERE confirmed_flag = 1 AND receipt_given = 0';
+} else if ($username == 'requests_for_receipts') {
+    $query = 'SELECT payment_id, amount_paid, date_of_payment, payment_type, payment_method, confirmed_flag, payment_confirmation_date, receipt_given, receipt_given_date, receipt_received, receipt_received_date, receipt_requested FROM payment_records WHERE confirmed_flag = 1 AND receipt_requested = 1';
 } else {
-    $query = 'SELECT payment_id, amount_paid, date_of_payment, payment_type, payment_method, confirmed_flag, payment_confirmation_date, receipt_given, receipt_given_date, receipt_received, receipt_received_date FROM payment_records WHERE flat_no = ' . $flat_no;
+    $query = 'SELECT payment_id, amount_paid, date_of_payment, payment_type, payment_method, confirmed_flag, payment_confirmation_date, receipt_given, receipt_given_date, receipt_received, receipt_received_date, receipt_requested FROM payment_records WHERE flat_no = ' . $flat_no;
+
 }
 $result = $conn->query($query);
 
